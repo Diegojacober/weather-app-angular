@@ -1,0 +1,8 @@
+<ng-template [ngIf]="modalActive">
+  <div class="modal-outer" (click)="close()">
+    <div class="modal-inner">
+      <ng-content></ng-content>
+      <button (click)="close()" class="close-button">Close</button>
+    </div>
+  </div>
+</ng-template>

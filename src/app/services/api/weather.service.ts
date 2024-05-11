@@ -9,6 +9,7 @@ import { ApiResonse, WeatherResponse } from '../../../types';
 export class WeatherService {
   apiUrl: string = "https://api.mapbox.com/geocoding/v5/mapbox.places/"
   mapboxAPIKey: string = "pk.eyJ1IjoiZGllZ29qYWNvYmVyIiwiYSI6ImNscmo5bTQyYTAxNHUycWxiNm9sZnF3N20ifQ.8NPV3KHcRMnFS0q0GfJBfQ"
+  googleAPIKey: string = "AIzaSyAd5feE5cQDXQ6cIT159mEMx2xlFB3kmGk"
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,6 +23,20 @@ export class WeatherService {
        console.log(value)
       })
     )
-    
   }
+
+  getGeocodeGoogle(city: string, state: string) {
+    return this.httpClient.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${city},${state}&amp&key=${this.googleAPIKey}`).pipe(
+      tap((value) => {
+      })
+    )
+  }
+
+  getPlaceDetails(placeId: string) {
+    return this.httpClient.get<any>(`https://local.project/?place_id=${placeId}`, { }).pipe(
+      tap((value) => {
+      })
+    )
+  }
+
 }

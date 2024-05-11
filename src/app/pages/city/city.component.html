@@ -1,70 +1,96 @@
-<div class="w-full h-[350px] flex justify-between">
-    <div class="">
-        <p>13º</p>
-        <span>Campinas, São Paulo</span>
+<div class="w-[90%] m-auto pt-6">
+  <div class="relative w-full h-[250px] rounded-lg overflow-hidden shadow-lg">
+    <div
+      class="absolute inset-0 bg-cover bg-center filter brightness-50"
+      [style.backgroundImage]="'url(' + urlImage + ')'"
+    ></div>
+    <div
+      class="absolute inset-0 flex justify-between items-end px-6 py-4 text-white"
+    >
+      <div class="flex flex-col gap-1">
+        <p class="text-8xl font-extralight">{{ currentData.feels_like }}º</p>
+        <span class="text-lg">{{ cityId }}, {{ stateId }}</span>
+      </div>
+      <div class="flex flex-col">
+        <p class="text-end font-semibold">{{ currentData.time }}</p>
+        <span class="text-start font-normal">{{ currentData.day | titlecase}}</span>
+      </div>
     </div>
-    <div>
-        <p>07:30</p>
-        <span>Monday</span>
-    </div>
+  </div>
+
+  <article
+    id="informations"
+    class="flex w-full justify-between mt-6 p-4 select-none"
+  >
+    <section id="left--side" class="w-[40%] rounded">
+      <div class="flex justify-between items-center gap-4 p-4 py-3 glass">
+        <div class="flex flex-col gap-8">
+          <div class="flex justify-start items-center gap-2">
+            <ng-icon name="ionWaterOutline" size="30"></ng-icon>
+            <div class="flex flex-col gap-[1px]">
+              <p class="text-sm">Humidity</p>
+              <span class="text-xs font-semibold">{{ currentData.humidity }}%</span>
+            </div>
+          </div>
+
+          <div class="flex justify-start items-center gap-2">
+            <ng-icon name="ionSunnyOutline" size="30"></ng-icon>
+            <div class="flex flex-col gap-[1px]">
+              <p class="text-sm">UV index</p>
+              <span class="text-xs font-semibold">{{ currentData.uvi }} of 10</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divisor"></div>
+
+        <div class="flex flex-col gap-8">
+          <div class="flex justify-start items-center gap-2">
+            <ng-icon name="tablerSunset" size="30"></ng-icon>
+            <div class="flex flex-col gap-[1px]">
+              <p class="text-sm">Sunset</p>
+              <span class="text-xs font-semibold">{{ currentData.sunset }}</span>
+            </div>
+          </div>
+
+          <div class="flex justify-start items-center gap-2">
+            <ng-icon name="tablerSunrise" size="30"></ng-icon>
+            <div class="flex flex-col gap-[1px]">
+              <p class="text-sm">Sunrise</p>
+              <span class="text-xs font-semibold">{{ currentData.sunrise }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex mt-6 justify-between px-4 py-2 bg-gradient-to-r from-weather-secondary to-weather-5 rounded-md"
+      >
+        <div class="flex justify-start items-center gap-2">
+          <ng-icon name="tablerSunMoon" size="30"></ng-icon>
+          <div class="flex flex-col gap-[1px]">
+            <p class="text-sm">Moonset</p>
+            <span class="text-xs font-semibold">05:50</span>
+          </div>
+        </div>
+
+        <div class="flex justify-start items-center gap-2">
+          <ng-icon name="tablerHazeMoon" size="30"></ng-icon>
+          <div class="flex flex-col gap-[1px]">
+            <p class="text-sm">Moonrise</p>
+            <span class="text-xs font-semibold">18:50</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="right--side" class="border border-slate-500 w-[55%] rounded">
+      <div class="p-2 text-sm">
+        <p>Temperature Day</p>
+        <div class="chart"></div>
+      </div>
+
+      <div id="next--days"></div>
+    </section>
+  </article>
 </div>
-
-<article id="informations" class="flex">
-    
-    <section id="left--side">
-        <div class="flex">
-            <div>
-                <div class="flex">
-                    icon
-                    <div>
-                        <p>Humidity</p>
-                        <span>39%</span>
-                    </div>
-                </div>
-        
-                <div class="flex">
-                    icon
-                    <div>
-                        <p>UV index</p>
-                        <span>39%</span>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="divisor"></div>
-        
-            <div>
-                <div class="flex">
-                    icon
-                    <div>
-                        <p>Sunset</p>
-                        <span>39%</span>
-                    </div>
-                </div>
-        
-                <div class="flex">
-                    icon
-                    <div>
-                        <p>Sunrise</p>
-                        <span>39%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="right--side">
-        <div>
-            <p>Temperature Day</p>
-            <div class="chart">
-
-            </div>
-        </div>
-
-        <div id="next--days">
-
-        </div>
-    </section>
-    
-</article>
-

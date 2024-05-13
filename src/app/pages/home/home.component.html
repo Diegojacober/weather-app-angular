@@ -14,7 +14,7 @@
 
     <ng-template [ngIf]="resultsList?.features && city != '' && !loading">
       <ul
-        class="absolute focus:ring-0 focus:ring-offset-0 bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
+        class="absolute z-30 focus:ring-0 focus:ring-offset-0 bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
       >
         <ng-template [ngIf]="errors">
           <p>Sorry, something went wrong, please try again.</p>
@@ -28,19 +28,48 @@
 
         <li
           class="oy-2 cursor-pointer p-2 hover:bg-weather-primary"
-          *ngFor="let result of resultsList?.features" (click)="navigate(result)"
+          *ngFor="let result of resultsList?.features"
+          (click)="navigate(result)"
         >
           {{ result.place_name }}
         </li>
       </ul>
     </ng-template>
   </div>
-  <div class="flex flex-col gap-4">
-    <!-- <Suspense>
-        <CityList/>
-        <template #fallback>
-          <CityCardSkeleton/>
-        </template>
-      </Suspense> -->
+  <div class="flex flex-col gap-4 mt-44 mb-4 relative">
+    <section class="w-full shadow-sm">
+      <ng-template [ngIf]="!loadingCities">
+        <div
+          *ngFor="let city of favoriteCities"
+          class="relative w-full h-[250px] rounded-lg overflow-hidden shadow-lg select-none mb-6 cursor-pointer"
+          (click)="navigateToCity(city)"
+        >
+          <div
+            class="absolute inset-0 bg-cover bg-center filter brightness-50"
+            [style.backgroundImage]="'url(' + city.photo + ')'"
+          ></div>
+          <div
+            class="absolute inset-0 flex flex-col justify-between px-6 py-4 text-white"
+          >
+            <div class="flex-1 w-full text-end">
+              <ng-icon
+                (click)="removeFromFavorites(city.cityId)"
+                class="cursor-pointer"
+                name="tablerHeartFilled"
+                color="#3c6e71"
+                size="40"
+              ></ng-icon>
+            </div>
+            <div class="flex justify-between items-end">
+              <div class="flex flex-col gap-1">
+                <p class="text-8xl font-extralight">{{ city.feels_like }}º</p>
+                <span class="text-lg">{{ city.cityId }}, {{ city.state }}</span>
+              </div>
+              <div class="flex flex-col"></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </section>
   </div>
 </main>

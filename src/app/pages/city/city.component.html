@@ -1,96 +1,139 @@
 <div class="w-[90%] m-auto pt-6">
-  <div class="relative w-full h-[250px] rounded-lg overflow-hidden shadow-lg">
-    <div
-      class="absolute inset-0 bg-cover bg-center filter brightness-50"
-      [style.backgroundImage]="'url(' + urlImage + ')'"
-    ></div>
-    <div
-      class="absolute inset-0 flex justify-between items-end px-6 py-4 text-white"
-    >
-      <div class="flex flex-col gap-1">
-        <p class="text-8xl font-extralight">{{ currentData.feels_like }}º</p>
-        <span class="text-lg">{{ cityId }}, {{ stateId }}</span>
-      </div>
-      <div class="flex flex-col">
-        <p class="text-end font-semibold">{{ currentData.time }}</p>
-        <span class="text-start font-normal">{{ currentData.day | titlecase}}</span>
+  <ng-template [ngIf]="loading">
+    <app-loading></app-loading>
+  </ng-template>
+
+  <ng-template [ngIf]="!loading">
+    <div class="relative w-full h-[250px] rounded-lg overflow-hidden shadow-lg select-none">
+      <div
+        class="absolute inset-0 bg-cover bg-center filter brightness-50"
+        [style.backgroundImage]="'url(' + urlImage + ')'"
+      ></div>
+      <div class="absolute inset-0 flex flex-col justify-between px-6 py-4 text-white">
+        <div class="flex-1 w-full text-end">
+          <ng-icon (click)="addToFavorites()" class="cursor-pointer" *ngIf="!favorite; else unfavorite" name="tablerHeart" color="#3c6e71" size="40"></ng-icon>
+          <ng-template #unfavorite>
+            <ng-icon (click)="removeFromFavorites()" class="cursor-pointer" name="tablerHeartFilled" color="#3c6e71" size="40"></ng-icon>
+          </ng-template>
+        </div>
+        <div class="flex justify-between items-end">
+          <div class="flex flex-col gap-1">
+            <p class="text-8xl font-extralight">{{ currentData.feels_like }}º</p>
+            <span class="text-lg">{{ cityId }}, {{ stateId }}</span>
+          </div>
+          <div class="flex flex-col">
+            <p class="text-end font-semibold">{{ currentData.time }}</p>
+            <span class="text-start font-normal">{{
+              currentData.day | titlecase
+            }}</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <article
-    id="informations"
-    class="flex w-full justify-between mt-6 p-4 select-none"
-  >
-    <section id="left--side" class="w-[40%] rounded">
-      <div class="flex justify-between items-center gap-4 p-4 py-3 glass">
-        <div class="flex flex-col gap-8">
-          <div class="flex justify-start items-center gap-2">
-            <ng-icon name="ionWaterOutline" size="30"></ng-icon>
-            <div class="flex flex-col gap-[1px]">
-              <p class="text-sm">Humidity</p>
-              <span class="text-xs font-semibold">{{ currentData.humidity }}%</span>
+    <article
+      id="informations"
+      class="flex w-full justify-between mt-6 p-4 select-none"
+    >
+      <section id="left--side" class="w-[40%] rounded">
+        <div class="flex justify-between items-center gap-4 p-4 py-3 glass">
+          <div class="flex flex-col gap-8">
+            <div class="flex justify-start items-center gap-2">
+              <ng-icon name="ionWaterOutline" size="30"></ng-icon>
+              <div class="flex flex-col gap-[1px]">
+                <p class="text-sm">Humidity</p>
+                <span class="text-xs font-semibold"
+                  >{{ currentData.humidity }}%</span
+                >
+              </div>
+            </div>
+
+            <div class="flex justify-start items-center gap-2">
+              <ng-icon name="ionSunnyOutline" size="30"></ng-icon>
+              <div class="flex flex-col gap-[1px]">
+                <p class="text-sm">UV index</p>
+                <span class="text-xs font-semibold"
+                  >{{ currentData.uvi }} of 10</span
+                >
+              </div>
             </div>
           </div>
 
-          <div class="flex justify-start items-center gap-2">
-            <ng-icon name="ionSunnyOutline" size="30"></ng-icon>
-            <div class="flex flex-col gap-[1px]">
-              <p class="text-sm">UV index</p>
-              <span class="text-xs font-semibold">{{ currentData.uvi }} of 10</span>
+          <div class="divisor"></div>
+
+          <div class="flex flex-col gap-8">
+            <div class="flex justify-start items-center gap-2">
+              <ng-icon name="tablerSunset" size="30"></ng-icon>
+              <div class="flex flex-col gap-[1px]">
+                <p class="text-sm">Sunset</p>
+                <span class="text-xs font-semibold">{{
+                  currentData.sunset
+                }}</span>
+              </div>
+            </div>
+
+            <div class="flex justify-start items-center gap-2">
+              <ng-icon name="tablerSunrise" size="30"></ng-icon>
+              <div class="flex flex-col gap-[1px]">
+                <p class="text-sm">Sunrise</p>
+                <span class="text-xs font-semibold">{{
+                  currentData.sunrise
+                }}</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="divisor"></div>
-
-        <div class="flex flex-col gap-8">
+        <div
+          class="flex mt-10 justify-between px-4 py-4 bg-gradient-to-r from-weather-secondary to-weather-5 rounded-md"
+        >
           <div class="flex justify-start items-center gap-2">
-            <ng-icon name="tablerSunset" size="30"></ng-icon>
+            <ng-icon name="tablerSunMoon" size="30"></ng-icon>
             <div class="flex flex-col gap-[1px]">
-              <p class="text-sm">Sunset</p>
-              <span class="text-xs font-semibold">{{ currentData.sunset }}</span>
+              <p class="text-sm">Moonset</p>
+              <span class="text-xs font-semibold">{{
+                currentData.moonset
+              }}</span>
             </div>
           </div>
 
           <div class="flex justify-start items-center gap-2">
-            <ng-icon name="tablerSunrise" size="30"></ng-icon>
+            <ng-icon name="tablerHazeMoon" size="30"></ng-icon>
             <div class="flex flex-col gap-[1px]">
-              <p class="text-sm">Sunrise</p>
-              <span class="text-xs font-semibold">{{ currentData.sunrise }}</span>
+              <p class="text-sm">Moonrise</p>
+              <span class="text-xs font-semibold">{{
+                currentData.moonrise
+              }}</span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div
-        class="flex mt-6 justify-between px-4 py-2 bg-gradient-to-r from-weather-secondary to-weather-5 rounded-md"
+      <section
+        id="right--side"
+        class="shadow-sm glass px-2 py-1 w-[58%] rounded"
       >
-        <div class="flex justify-start items-center gap-2">
-          <ng-icon name="tablerSunMoon" size="30"></ng-icon>
-          <div class="flex flex-col gap-[1px]">
-            <p class="text-sm">Moonset</p>
-            <span class="text-xs font-semibold">05:50</span>
-          </div>
+        <div class="p-2 text-sm">
+          <p>Next Hours Temperature</p>
+          <ng-template [ngIf]="hourlyData.length > 0">
+            <app-chart [data]="hourlyData"></app-chart>
+          </ng-template>
         </div>
+      </section>
+    </article>
 
-        <div class="flex justify-start items-center gap-2">
-          <ng-icon name="tablerHazeMoon" size="30"></ng-icon>
-          <div class="flex flex-col gap-[1px]">
-            <p class="text-sm">Moonrise</p>
-            <span class="text-xs font-semibold">18:50</span>
-          </div>
-        </div>
+    <article class="w-full px-4">
+      <h3 class="mb-2">Next Days</h3>
+      <div class="flex gap-4 justify-between items-center">
+        <section
+          *ngFor="let day of currentData.daily"
+          class="flex flex-col gap-2 justify-center items-center px-6 py-2 rounded bg-weather-secondary"
+        >
+          <h4>{{ day.day }}</h4>
+          <ng-icon [name]="day.icon" size="40" color="#353535"></ng-icon>
+          <p>{{ day.feels_like }}º</p>
+        </section>
       </div>
-    </section>
-
-    <section id="right--side" class="border border-slate-500 w-[55%] rounded">
-      <div class="p-2 text-sm">
-        <p>Temperature Day</p>
-        <div class="chart"></div>
-      </div>
-
-      <div id="next--days"></div>
-    </section>
-  </article>
+    </article>
+  </ng-template>
 </div>

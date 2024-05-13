@@ -20,7 +20,6 @@ export class WeatherService {
   getWeather(lat: string, lng: string) {
     return this.httpClient.get<WeatherResponse>(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude={part}&units=metric&appid=c4db5671ae40600b0c9d51bc8cf9977a`).pipe(
       tap((value) => {
-       console.log(value)
       })
     )
   }
